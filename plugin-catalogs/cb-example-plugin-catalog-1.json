@@ -1,0 +1,16 @@
+{
+    "type" : "plugin-catalog",
+    "version" : "1",
+    "name" : "CB-example-1",
+    "displayName" : "CB-example-1",
+    "configurations" : [
+        {
+            "description" : "CB example plugin catalog 1",
+            "includePlugins" : {
+                "jaxb" : {
+                    "url": "http://ftp-chi.osuosl.org/pub/jenkins/plugins/jaxb/2.2.11/jaxb.hpi"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: "my-prod-agent"
+  labels: 
+    name: "my-prod-agent"
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "my-prod-agent"
+  template: 
+    metadata: 
+      name: "my-prod-agent"
+      labels: 
+        name: "my-prod-agent"
+    spec: 
+      containers:
+      - name: jnlp-slave
+        image: jenkinsci/jnlp-slave
+        env:
+          - name: JENKINS_URL
+            value: "http://master-a.cje.svc.cluster.local/master-a/"
+          - name: JENKINS_AGENT_NAME
+            value: "my-prod-agent"
+          - name: JENKINS_SECRET
+            value: d01afbb5b6f45770665c9c5d640116d755eb81c1569da686a6badea967700478
+        livenessProbe:
+          exec:
+            command:
+            - uname
+            - -a
+          initialDelaySeconds: 60
+          timeoutSeconds: 1

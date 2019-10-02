@@ -1,0 +1,15 @@
+@JENKINS_URL = localhost
+
+###
+# Create Group - CSRF off
+POST http://{{JENKINS_URL}}/cjoc/groups/createGroup/api/json?name=RestTest
+Content-Type: application/json
+Authorization: Basic admin admin1234
+
+###
+# Get crumbIssuer (not working)
+GET http://{{JENKINS_URL}}/crumbIssuer/api/xml
+Content-Type: application/xml
+Accept: application/xml
+Authorization: Basic admin admin1234
+

@@ -1,0 +1,16 @@
+{
+    "type" : "plugin-catalog",
+    "version" : "1",
+    "name" : "CB-beer",
+    "displayName" : "CB-beer",
+    "configurations" : [
+        {
+            "description" : "CB beer plugin catalog",
+            "includePlugins" : {
+                "beer" : {
+                    "url": "http://ftp-chi.osuosl.org/pub/jenkins/plugins/beer/1.1/beer.hpi"
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+@JENKINS_URL = localhost
+
+###
+# Get job details
+GET http://{{JENKINS_URL}}/teams-team-a/job/team-a/job/testJob/api/json
+Content-Type: application/json
+Accept: application/json
+Authorization: Basic admin admin1234
+

@@ -1,0 +1,19 @@
+{
+    "type" : "plugin-catalog",
+    "version" : "2",
+    "name" : "CB-example-2",
+    "displayName" : "CB-example-2",
+    "configurations" : [
+        {
+            "description" : "CB example plugin catalog 2",
+            "includePlugins" : {
+                "jaxb" : {
+                    "version" : "2.3.0"
+                },
+                "beer" : {
+                    "version" : "1.2"
+                }
+            }
+        }
+    ]
+}
