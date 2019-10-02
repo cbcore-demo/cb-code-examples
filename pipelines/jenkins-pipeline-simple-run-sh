@@ -1,0 +1,10 @@
+pipeline {
+    agent { label 'my-nonprod-agent' }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'sleep 5'
+            }
+        }
+    }   
+}

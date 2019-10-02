@@ -1,0 +1,25 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Build') { 
+            steps {
+                echo 'This is the build stage'
+                script {
+                    val=currentBuild.getBuildCauses()[0].event.param.toString()
+                }
+                echo "The event body included this message: ${val}"
+                sleep 30
+            }
+        }
+        stage('Test') { 
+            steps {
+                echo 'This is the test stage'
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                echo 'This is the deploy stage'
+            }
+        }
+    }
+}
