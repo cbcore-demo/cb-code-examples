@@ -1,0 +1,15 @@
+@FLOW_URL = 192.168.50.105
+@USER = admin
+@PASSWORD = changeme
+
+###
+# Get all projects
+GET https://{{FLOW_URL}}/rest/v1.0/projects
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+###
+# Get specific project
+GET https://{{FLOW_URL}}/rest/v1.0/projects/My%20Project/workspaceName
+Accept: application/json
+Authorization: Basic {{USER}} {{{{PASSWORD}}}}
