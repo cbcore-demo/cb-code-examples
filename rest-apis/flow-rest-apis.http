@@ -10,6 +10,6 @@ Authorization: Basic {{USER}} {{PASSWORD}}
 
 ###
 # Get specific project
-GET https://{{FLOW_URL}}/rest/v1.0/projects/My%20Project/workspaceName
+GET https://{{FLOW_URL}}/rest/v1.0/projects/My%20Project
 Accept: application/json
 Authorization: Basic {{USER}} {{{{PASSWORD}}}}
