@@ -2,6 +2,7 @@
 @USER = admin
 @PASSWORD = changeme
 
+########## Projects ##########
 ###
 # Get all projects
 GET https://{{FLOW_URL}}/rest/v1.0/projects
@@ -12,4 +13,39 @@ Authorization: Basic {{USER}} {{PASSWORD}}
 # Get specific project
 GET https://{{FLOW_URL}}/rest/v1.0/projects/My%20Project
 Accept: application/json
-Authorization: Basic {{USER}} {{{{PASSWORD}}}}
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+########## Releases ##########
+###
+# Start Release
+POST https://{{FLOW_URL}}/rest/v1.0/releases
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+{
+    "projectName" : "My Project",
+    "releaseName" : "REST release"
+}
+
+###
+# Get Releases
+GET https://{{FLOW_URL}}/rest/v1.0/releases
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+########## Pipelines ##########
+### Run pipeline in a release ###
+POST https://{{FLOW_URL}}/rest/v1.0/pipelines
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+{
+    "projectName" : "My Project",
+    "releaseName" : "REST release",
+    "pipelineName" : "pipeline_REST release"
+}
+
+########## Server ##########
+GET https://{{FLOW_URL}}/rest/v1.0/plugins
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
