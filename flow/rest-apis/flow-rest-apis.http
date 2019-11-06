@@ -45,7 +45,7 @@ Authorization: Basic {{USER}} {{PASSWORD}}
     "pipelineName" : "pipeline_REST release"
 }
 
-########## Server ##########
-GET https://{{FLOW_URL}}/rest/v1.0/plugins
+########## Plugin ##########
+GET https://{{FLOW_URL}}/rest/v1.0/plugins/EC-Rest-1.0.7.83293
 Accept: application/json
 Authorization: Basic {{USER}} {{PASSWORD}}
