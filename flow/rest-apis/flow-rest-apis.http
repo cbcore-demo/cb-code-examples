@@ -1,6 +1,10 @@
-@FLOW_URL = 192.168.50.105
+#@FLOW_URL = 192.168.50.105
+#@USER = admin
+#@PASSWORD = changeme
+@FLOW_URL = flow.acme-global.com
 @USER = admin
-@PASSWORD = changeme
+@PASSWORD = project1001
+
 
 ########## Projects ##########
 ###
@@ -33,6 +37,16 @@ GET https://{{FLOW_URL}}/rest/v1.0/releases
 Accept: application/json
 Authorization: Basic {{USER}} {{PASSWORD}}
 
+###
+# Get Specific Release
+GET https://{{FLOW_URL}}/rest/v1.0/releases/Phils%20Release%2008112019
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+{
+    "projectName" : "AcmeGlobal-Releases"
+}
+
 ########## Pipelines ##########
 ### Run pipeline in a release ###
 POST https://{{FLOW_URL}}/rest/v1.0/pipelines
@@ -45,7 +59,36 @@ Authorization: Basic {{USER}} {{PASSWORD}}
     "pipelineName" : "pipeline_REST release"
 }
 
+### Get Pipeline
+GET https://{{FLOW_URL}}/rest/v1.0/pipelines/Phils%20Release%2008112019_Multi-stage%20release%20template_1_20191108103421
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+{
+    "projectName" : "AcmeGlobal-Releases"
+}
+
 ########## Plugin ##########
 GET https://{{FLOW_URL}}/rest/v1.0/plugins/EC-Rest-1.0.7.83293
 Accept: application/json
 Authorization: Basic {{USER}} {{PASSWORD}}
+
+########## Gate ##########
+### Approve Gate ###
+### NOT WORKING ###
+PUT https://{{FLOW_URL}}/rest/v1.0/jobs?request=runProcedure&projectName=EC-ServiceNow-2.4.1.114&procedureName=ApproveOrRejectPipelineGate
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+ {
+        "actualParameter" : [
+            {
+                "actualParameterName" : "correlation_id",
+                "value" : "/flowRuntime/535895ff-0213-11ea-97dd-06fe7d1e6f5a/stage/PROD/gate/PRE/taskName/WaitforCR_Approval"
+            },
+            {
+                "actualParameterName" : "action",
+                "value" : 1
+            }
+        ]
+    }
