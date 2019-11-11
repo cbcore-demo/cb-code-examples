@@ -1,9 +1,9 @@
-#@FLOW_URL = 192.168.50.105
-#@USER = admin
-#@PASSWORD = changeme
-@FLOW_URL = flow.acme-global.com
+@FLOW_URL = 192.168.50.105
 @USER = admin
-@PASSWORD = project1001
+@PASSWORD = changeme
+#@FLOW_URL = flow.acme-global.com
+#@USER = admin
+#@PASSWORD = project1001
 
 
 ########## Projects ##########
@@ -92,3 +92,15 @@ Authorization: Basic {{USER}} {{PASSWORD}}
             }
         ]
     }
+
+########## Server ##########
+### Eval DSL ###
+### NOT WORKING ###
+POST https://{{FLOW_URL}}/rest/v1.0/server/dsl
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+{
+    "request" : "evalDsl",
+    "dsl" : "environment \'DSL_Dev\', {\nenvironmentEnabled = \'1\'\nprojectName = \'QBR-Nov-2019-PreWork\'\nreservationRequired = \'0\'\nrollingDeployEnabled = null\nrollingDeployType = null\nenvironmentTier \'Web Server\', {\nbatchSize = null\nbatchSizeType = null\nresourceName = [\n\'flow-agent-1\',\n]\n}\n}"
+}
