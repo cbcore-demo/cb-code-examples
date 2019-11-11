@@ -11,3 +11,7 @@ cd /opt/electriccloud/electriccommander/bin
 ## Pipelines ##
 ### Run Pipeline ###
 ./ectool runPipeline --projectName "My Project" --releaseName "REST release" --pipelineName "pipeline_REST release"
+
+## DSL ##
+### evalDsl ###
+./ectool evalDsl --dslFile /tmp/newenvdsl.groovy
