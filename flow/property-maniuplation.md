@@ -1,4 +1,4 @@
-# Flow Property Maniuplation #
+# Flow Property Manipulation #
 
 ## Retrieve property ##
 ### Property named ResultVal stored at the component level ###
