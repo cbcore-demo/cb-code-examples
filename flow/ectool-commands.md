@@ -2,7 +2,7 @@
 
 ## Login ##
 cd /opt/electriccloud/electriccommander/bin
-./ectool --server 192.168.50.105 login "admin" "changeme"
+./ectool --server 192.168.50.105 login "<user>" "<pwd>"
 
 ## Releases ##
 ### Start Release ###
