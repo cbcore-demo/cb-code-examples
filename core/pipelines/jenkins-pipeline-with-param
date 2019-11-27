@@ -1,0 +1,23 @@
+No need to use 'General job definition', can just define attribute with ID 'myParam' in the form above the job template pipeline.
+
+
+pipeline {
+    agent any 
+    stages {
+        stage('Build') { 
+            steps {
+                echo "This is the build stage ${myParam}"
+            }
+        }
+        stage('Test') { 
+            steps {
+                echo 'This is the test stage'
+            }
+        }
+        stage('Deploy') { 
+            steps {
+                echo 'This is the deploy stage'
+            }
+        }
+    }
+}
