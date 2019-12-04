@@ -1,6 +1,9 @@
-From: https://github.com/skures/jpetstore/blob/master/Jenkinsfile
+# Notes on using Stefan-example Jenkinsfile to integrate Jenkins and Flow #
+
+From: <https://github.com/skures/jpetstore/blob/master/Jenkinsfile>
 
 The last steps in the Jenkinsfile do:
+
 - Create artefact
 - Set parameter in pipeline to snapshot version
 
