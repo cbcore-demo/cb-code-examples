@@ -1,4 +1,4 @@
-@FLOW_URL = 35.189.76.72
+@FLOW_URL = flow-gce.pcherry.uk
 @USER = admin
 @PASSWORD = changeme
 #@FLOW_URL = flow.acme-global.com
@@ -57,6 +57,17 @@ Authorization: Basic {{USER}} {{PASSWORD}}
     "projectName" : "My Project",
     "releaseName" : "REST release",
     "pipelineName" : "pipeline_REST release"
+}
+
+### Run stage of pipeline ###
+POST https://{{FLOW_URL}}/rest/v1.0/pipelines
+Accept: application/json
+Authorization: Basic {{USER}} {{PASSWORD}}
+
+{
+    "projectName" : "My Tests",
+    "pipelineName" : "Security pipeline",
+    "stagesToRun" : "PreProd"
 }
 
 ### Get Pipeline
