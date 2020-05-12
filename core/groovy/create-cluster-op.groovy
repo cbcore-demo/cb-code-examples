@@ -61,5 +61,5 @@ def configXml = """
 </com.cloudbees.opscenter.server.clusterops.ClusterOpProject>
 """
 
-println "Creating job #name"
+println "Creating job $name"
 def p = j.createProjectFromXML(name, new ByteArrayInputStream(configXml.getBytes("UTF-8")));
