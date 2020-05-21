@@ -1,0 +1,5 @@
+# Save this file as 'oc' (no extension)
+# and place it in /usr/local/bin (or somewhere else on the PATH)
+
+echo "Dummy oc command for testing CloudBees Flow processes"
+echo "oc was invoked with these parameters: $@
