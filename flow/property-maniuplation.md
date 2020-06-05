@@ -4,7 +4,13 @@
 ### Property named ResultVal stored at the component level ###
 $[/javascript myComponent.ResultVal]
 
-## Use parameter (called SourceFileName) defined in Procedure within a procedure step ##
+### Get an element from a JSON result that is stored in an outputParameter from a different step in a stage ###
+$[/javascript JSON.parse(myPipelineStagetasks["The task Name"].job.outputParameters)["JSON field Path"]]
+
+### Access outputParameter called restResult from a different step in the current Process ###
+$[/myJob/steps/Get Route Details/steps/Get a Route in a namespace/outputParameters/restResult]
+
+### Use parameter (called SourceFileName) defined in Procedure within a procedure step ###
 $[SourceFileName]
 
 ## Extract single value from JSON ##
@@ -13,3 +19,12 @@ $[SourceFileName]
 
 ### Example - retrieve project.workspaceName ###
 $[/javascript var obj=JSON.parse('$[/myComponent/ResultVal]'); obj.project.workspaceName]
+
+##  Get an element from a JSON result that is stored in an outputParameter of a different step, run it in the context of a previously run step ##
+expandString jobStepId : "72411ebf-a73f-11ea-afaa-42010a840017", value : '''\
+$[/javascript
+JSON.parse(
+	myJob.steps["Get Route Details"].steps["Get a Route in a namespace"].outputParameters.restResult
+).spec.to.kind
+]
+'''
