@@ -13,6 +13,10 @@ $[/myJob/steps/Get Route Details/steps/Get a Route in a namespace/outputParamete
 ### Use parameter (called SourceFileName) defined in Procedure within a procedure step ###
 $[SourceFileName]
 
+### Get PipelineRuntime name ###
+$[/myPipelineRuntime/name]
+
+
 ## Extract single value from JSON ##
 ### JSON sample ###
 "{"project":{"projectId":"11a6a613-d878-11e9-8df7-000c297e1ec0","projectName":"My Project","createTime":"2019-09-16T11:49:41.506Z","lastModifiedBy":"admin","modifyTime":"2019-09-16T11:49:41.506Z","owner":"admin","processCount":"0","propertySheetId":"11a6cd25-d878-11e9-8df7-000c297e1ec0","resourceName":"local","stageCount":"0","tracked":"1","workspaceName":"default"}}"
@@ -28,3 +32,11 @@ JSON.parse(
 ).spec.to.kind
 ]
 '''
+
+## Other ##
+
+### Reference the task in a particular stage entry gate (eg for setting correlation id for ServiceNow Create CR ###)
+/flowRuntime/$[/myPipelineRuntime/id]/stage/Production/gate/PRE/taskName/ServiceNow Approval
+
+### Generate link to a pipeline run ###
+https://flow.cloudbees.guru/flow/?s=Flow+Tools&ss=Flow#pipeline-run/$[/myPipeline/id]/$[/myPipelineRuntime/id]'
