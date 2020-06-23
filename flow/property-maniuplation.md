@@ -1,16 +1,18 @@
 # Flow Property Manipulation #
 
-## Retrieve property ##
-### Property named ResultVal stored at the component level ###
+## Property named ResultVal stored at the component level ##
 $[/javascript myComponent.ResultVal]
 
-### Get an element from a JSON result that is stored in an outputParameter from a different step in a stage ###
+## Get an element from a JSON result that is stored in an outputParameter from a different step in a stage ##
 $[/javascript JSON.parse(myPipelineStagetasks["The task Name"].job.outputParameters)["JSON field Path"]]
 
-### Access outputParameter called restResult from a different step in the current Process ###
+## Access outputParameter called restResult from a different step in the current Process ##
 $[/myJob/steps/Get Route Details/steps/Get a Route in a namespace/outputParameters/restResult]
 
-### Use parameter (called SourceFileName) defined in Procedure within a procedure step ###
+## Access outputParameter called ChangeRequestSysID from a different step, called Create CR, in the same pipeline stage ##
+$[/myStageRuntime/tasks/Create CR/job/outputParameters/ChangeRequestSysID]
+
+## Use parameter (called SourceFileName) defined in Procedure within a procedure step ##
 $[SourceFileName]
 
 ### Get PipelineRuntime name ###
@@ -40,3 +42,8 @@ JSON.parse(
 
 ### Generate link to a pipeline run ###
 https://flow.cloudbees.guru/flow/?s=Flow+Tools&ss=Flow#pipeline-run/$[/myPipeline/id]/$[/myPipelineRuntime/id]'
+## Similar to above but from a job in a stage ##
+expandString jobId : "job_168573_20200622125324", value : '''\
+$[/javascript myStageRuntime.tasks["Create CR"].job.outputParameters.ChangeRequestSysID
+]
+'''

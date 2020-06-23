@@ -11,6 +11,7 @@ cd /opt/electriccloud/electriccommander/bin
 ## Pipelines ##
 ### Run Pipeline ###
 ./ectool runPipeline --projectName "My Project" --releaseName "REST release" --pipelineName "pipeline_REST release"
+ectool runPipeline Default "pipeline_Run from REST" --releaseName "Run from REST" --actualParameter BuildID=11111
 
 ## DSL ##
 ### evalDsl ###
