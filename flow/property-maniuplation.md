@@ -2,6 +2,11 @@
 
 ## Property named ResultVal stored at the component level ##
 $[/javascript myComponent.ResultVal]
+$[/myComponent/ResultVal]
+
+## Reference result of JIRA Get Issues (multiple property sheets ##
+$[/javascript myStageRuntime.getIssuesResult.issues["$[jiraticket]"].status]
+$[/myStageRuntime/getIssuesResult/issues[$[jiraticket]]/status]
 
 ## Get an element from a JSON result that is stored in an outputParameter from a different step in a stage ##
 $[/javascript JSON.parse(myPipelineStagetasks["The task Name"].job.outputParameters)["JSON field Path"]]
