@@ -25,3 +25,18 @@ push (@::gMatchers,
 Notes
 - In this example I deliberately set the property at the job level, so another step could access it.
 - If you want to keep it at the job step level, then just do setProperty("returnedURL"...
+
+## Do not use default matchers ##
+## useful in situations where the default matchers will throw a false negaative
+## eg a CLI that returns a JSON containing the word 'ERROR'
+```
+use ElectricCommander;
+@::gMatchers =
+{
+   id => "returnedURL",
+   pattern => q{Somestring=(.*)},
+   action => q{
+   setProperty("/myJob/returnedURL", "Matcher $matcher->{id} found the following output\n\n$1");
+   }
+});
+```
