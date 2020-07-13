@@ -39,6 +39,18 @@ JSON.parse(
 ).spec.to.kind
 ]
 '''
+## Similar to above but from a job in a stage ##
+expandString jobId : "job_168573_20200622125324", value : '''\
+$[/javascript myStageRuntime.tasks["Create CR"].job.outputParameters.ChangeRequestSysID
+]
+'''
+
+## expandString to a workflow run (called Workflow), the definition is called WorkflowDefinition ##
+expandString workflowName : "workflow_14_20200608104314", projectName: "pollServiceNow", value : '''\
+$[/javascript
+myWorkflow.recordID
+]
+'''
 
 ## Other ##
 
@@ -47,8 +59,5 @@ JSON.parse(
 
 ### Generate link to a pipeline run ###
 https://flow.cloudbees.guru/flow/?s=Flow+Tools&ss=Flow#pipeline-run/$[/myPipeline/id]/$[/myPipelineRuntime/id]'
-## Similar to above but from a job in a stage ##
-expandString jobId : "job_168573_20200622125324", value : '''\
-$[/javascript myStageRuntime.tasks["Create CR"].job.outputParameters.ChangeRequestSysID
-]
-'''
+
+
