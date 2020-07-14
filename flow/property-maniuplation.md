@@ -1,10 +1,32 @@
 # Flow Property Manipulation #
 
-## Property named ResultVal stored at the component level ##
+## Basic usage ##
+
+To reference a property called 'ResultVal' in current component, you can use:
+
+Javascript:
 ```
 $[/javascript myComponent.ResultVal]
 
+$[/javascript getProperty("/myComponent/ResultVal")]
+
+$[/javascript getProperty("$[/myComponent]/ResultVal")]
+```
+
+Elsewhere:
+
+```
 $[/myComponent/ResultVal]
+```
+
+Instead of relative addresses, can use absolute eg:
+
+If run in the context of the pipeline, then the 2 following are equivalent:
+
+```
+/myPipeline/matcherTest
+
+/projects/Custom012/pipelines/protected-command-credentials/matcherTest
 ```
 
 ## Reference result of JIRA Get Issues (multiple property sheets ##
