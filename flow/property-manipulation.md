@@ -29,7 +29,7 @@ If run in the context of the pipeline, then the 2 following are equivalent:
 /projects/Custom012/pipelines/protected-command-credentials/matcherTest
 ```
 
-## Reference result of JIRA Get Issues (multiple property sheets ##
+## Reference result of JIRA Get Issues (multiple property sheets) ##
 ```javascript
 $[/javascript myStageRuntime.getIssuesResult.issues["$[jiraticket]"].status]
 ```
