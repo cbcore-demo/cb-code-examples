@@ -1,9 +1,13 @@
 # Flow Jenkins Plugin #
 
 ## Call REST API Example - trigger Release and pass in Parameter ##
+
 Configuration: MyFlowAtHome
+
 URL Path: /releases
+
 HTTP Method: POST
+
 Body:
 {
 "projectName": "My Project",
