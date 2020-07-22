@@ -25,8 +25,8 @@ def JobId = ef.runProcedure(procedureName: "oc login pass in params", projectNam
 // Create job link to spawned job in the job report
 ef.setProperty propertyName: "/myJob/report-urls/Called procedure job", value: "link/jobDetails/jobs/${JobId}"
 // Wait for job
-while ((String) ef.getJobStatus(jobId: JobId).status == "running") {
-    println "Job still running"
+while ((JobStatus = (String) ef.getJobStatus(jobId: JobId).status) != "completed") {
+    println "Job status: " + JobStatus
     sleep 2000
 }
 // Grab a property from the subprocedure.  This assumes the subprocedure
