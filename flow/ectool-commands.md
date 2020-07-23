@@ -16,3 +16,10 @@ ectool runPipeline Default "pipeline_Run from REST" --releaseName "Run from REST
 ## DSL ##
 ### evalDsl ###
 ./ectool evalDsl --dslFile /tmp/newenvdsl.groovy
+
+
+## Create Plugin Configuration ##
+
+Linux example:
+
+printf 'apassword\n' | ectool runProcedure /plugins/ECSCM-git/project --procedureName CreateConfiguration --actualParameter config=myectoolcreds --actualParameter credentialType=password --actualParameter credential=myectoolcreds --credential myectoolcreds=auser
