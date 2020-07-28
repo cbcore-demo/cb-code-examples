@@ -38,5 +38,5 @@ use ElectricCommander;
    action => q{
    setProperty("/myJob/returnedURL", "Matcher $matcher->{id} found the following output\n\n$1");
    }
-});
+};
 ```
