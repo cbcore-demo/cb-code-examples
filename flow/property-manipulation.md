@@ -52,6 +52,9 @@ $[/myJob/steps/Get Route Details/steps/Get a Route in a namespace/outputParamete
 $[/myStageRuntime/tasks/Create CR/job/outputParameters/ChangeRequestSysID]
 ```
 
+## Access outputParameter of a procedure step from another step in that procedure ##
+$[/myJob/jobSteps[Call Subproc]/outputParameters/myoutput]
+
 ## Use parameter (called SourceFileName) defined in Procedure within a procedure step ##
 ```
 $[SourceFileName]
