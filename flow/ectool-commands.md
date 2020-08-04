@@ -23,3 +23,6 @@ ectool runPipeline Default "pipeline_Run from REST" --releaseName "Run from REST
 Linux example:
 
 printf 'apassword\n' | ectool runProcedure /plugins/ECSCM-git/project --procedureName CreateConfiguration --actualParameter config=myectoolcreds --actualParameter credentialType=password --actualParameter credential=myectoolcreds --credential myectoolcreds=auser
+
+## Export DSL ##
+ectool generateDsl "/projects/Default" --suppressNulls true --suppressDefaults true  > c:\temp\flow-dsl-exports/2020-07-15-Default-Project.dsl'
