@@ -4,7 +4,7 @@
 # eg ectool --server flowserver.com login "user" "passwrd"
 #
 # Adjust the following array as needed
-projectlist=(Custom005 Custom006 Custom007 Custom008 Custom009 Custom010 Custom011 Custom012 Autosys)
+projectlist=("Custom005" "Custom006" "Custom007" "Custom008" "Custom009" "Custom010" "Custom011" "Custom012" "Autosys")
 
 # Get web server host name and at the same time check ectool is logged in to a Flow server
 if ! host=$(ectool getProperty "/server/settings/webServerHost"); then
