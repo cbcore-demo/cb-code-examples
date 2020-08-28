@@ -1,266 +1,217 @@
-pipeline 'Jenkins Example', {
+
+pipeline 'Ephemeral Jenkins Example', {
   description = ''
   disableMultipleActiveRuns = '0'
   disableRestart = '0'
   enabled = '1'
   overrideWorkspace = '0'
-  pipelineRunNameTemplate = null
   projectName = 'Default'
-  releaseName = null
   skipStageMode = 'ENABLED'
-  templatePipelineName = null
-  templatePipelineProjectName = null
-  type = null
-  workspaceName = null
 
   formalParameter 'ec_stagesToRun', defaultValue: null, {
     expansionDeferred = '1'
-    label = null
-    orderIndex = null
     required = '0'
-    type = null
   }
 
-  stage 'Stage 1', {
+  stage 'Build', {
+    description = ''
     colorCode = '#00adee'
     completionType = 'auto'
-    condition = null
-    duration = null
-    parallelToPrevious = null
-    pipelineName = 'Jenkins Example'
-    plannedEndDate = null
-    plannedStartDate = null
-    precondition = null
-    resourceName = null
+    pipelineName = 'Ephemeral Jenkins Example'
+    projectName = 'Default'
     waitForPlannedStartDate = '0'
 
     gate 'PRE', {
-      condition = null
-      precondition = null
-      }
+      projectName = 'Default'
+    }
 
     gate 'POST', {
-      condition = null
-      precondition = null
+      projectName = 'Default'
+
       task 'Check for 0 test failures', {
         description = ''
-        actionLabelText = null
         advancedMode = '0'
-        afterLastRetry = null
         allowOutOfOrderRun = '0'
-        allowSkip = null
         alwaysRun = '0'
-        condition = null
-        customLabel = null
-        deployerExpression = null
-        deployerRunType = null
-        disableFailure = null
-        duration = null
-        emailConfigName = null
         enabled = '1'
-        environmentName = null
-        environmentProjectName = null
-        environmentTemplateName = null
-        environmentTemplateProjectName = null
         errorHandling = 'stopOnError'
         gateCondition = '$[/javascript myPipelineRuntime.testsFailures == 0]'
         gateType = 'POST'
-        groupName = null
-        groupRunType = null
         insertRollingDeployManualStep = '0'
-        instruction = null
-        notificationEnabled = null
-        notificationTemplate = null
-        parallelToPrevious = null
-        plannedEndDate = null
-        plannedStartDate = null
-        precondition = null
-        requiredApprovalsCount = null
+        projectName = 'Default'
         resourceName = ''
-        retryCount = null
-        retryInterval = null
-        retryType = null
-        rollingDeployEnabled = null
-        rollingDeployManualStepCondition = null
         skippable = '0'
-        snapshotName = null
-        stageSummaryParameters = null
-        startingStage = null
-        subErrorHandling = null
-        subapplication = null
-        subpipeline = null
-        subpluginKey = null
-        subprocedure = null
-        subprocess = null
         subproject = 'Default'
-        subrelease = null
-        subreleasePipeline = null
-        subreleasePipelineProject = null
-        subreleaseSuffix = null
-        subservice = null
-        subworkflowDefinition = null
-        subworkflowStartingState = null
-        taskProcessType = null
         taskType = 'CONDITIONAL'
-        triggerType = null
         useApproverAcl = '0'
         waitForPlannedStartDate = '0'
       }
     }
 
+    task 'Create Jenkins job', {
+      description = ''
+      actualParameter = [
+        'config': 'CloudBees Core Red Team server',
+        'jobName': '$[/myPipelineRuntime/name]',
+        'parentPath': '/',
+        'xmlDefinition': '''<flow-definition plugin=\"workflow-job@2.39\">
+<description/>
+<keepDependencies>false</keepDependencies>
+<properties/>
+<definition class=\"org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition\" plugin=\"workflow-cps@2.80\">
+<scm class=\"hudson.plugins.git.GitSCM\" plugin=\"git@4.2.1\">
+<configVersion>2</configVersion>
+<userRemoteConfigs>
+<hudson.plugins.git.UserRemoteConfig>
+<url>https://github.com/cloudbees-guru/sonatype-cloudbees-petclinic</url>
+<credentialsId>github-cloudbees-guru</credentialsId>
+</hudson.plugins.git.UserRemoteConfig>
+</userRemoteConfigs>
+<branches>
+<hudson.plugins.git.BranchSpec>
+<name>*/master</name>
+</hudson.plugins.git.BranchSpec>
+</branches>
+<doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+<submoduleCfg class=\"list\"/>
+<extensions/>
+</scm>
+<scriptPath>Jenkinsfile</scriptPath>
+<lightweight>true</lightweight>
+</definition>
+<triggers/>
+<disabled>false</disabled>
+</flow-definition>''',
+      ]
+      advancedMode = '0'
+      allowOutOfOrderRun = '0'
+      alwaysRun = '0'
+      enabled = '1'
+      errorHandling = 'stopOnError'
+      insertRollingDeployManualStep = '0'
+      projectName = 'Default'
+      resourceName = ''
+      skippable = '0'
+      subpluginKey = 'EC-Jenkins-Job-CRUD'
+      subprocedure = 'Create Job'
+      taskType = 'PLUGIN'
+      useApproverAcl = '0'
+      waitForPlannedStartDate = '0'
+    }
+
+    task 'Run Jenkins Job', {
+      description = ''
+      actualParameter = [
+        'config_name': 'jpb-test',
+        'jenkins_enable_parallel_mode': '0',
+        'job_name': '$[/myPipelineRuntime/name]',
+        'parameters': '',
+      ]
+      advancedMode = '0'
+      allowOutOfOrderRun = '0'
+      alwaysRun = '0'
+      enabled = '1'
+      errorHandling = 'stopOnError'
+      insertRollingDeployManualStep = '0'
+      projectName = 'Default'
+      resourceName = ''
+      skippable = '0'
+      subpluginKey = 'EC-Jenkins'
+      subprocedure = 'RunAndMonitorBuild'
+      taskType = 'PLUGIN'
+      useApproverAcl = '0'
+      waitForPlannedStartDate = '0'
+    }
+
     task 'Get Build Log', {
       description = ''
-      actionLabelText = null
       actualParameter = [
-        'build_number': '16',
-        'config_name': 'core-shared-demos',
-        'job_name': 'jpetstore/job/master',
+        'build_number': '$[/myPipelineRuntime/tasks/Run Jenkins job/job/outputParameters/jenkinsbuildnumber]',
+        'config_name': 'jpb-test',
+        'job_name': '$[/myPipelineRuntime/name]',
         'result_outpp': '/myPipelineRuntime/buildOutput',
       ]
       advancedMode = '0'
-      afterLastRetry = null
       allowOutOfOrderRun = '0'
-      allowSkip = null
       alwaysRun = '0'
-      condition = null
-      customLabel = null
-      deployerExpression = null
-      deployerRunType = null
-      disableFailure = null
-      duration = null
-      emailConfigName = null
       enabled = '1'
-      environmentName = null
-      environmentProjectName = null
-      environmentTemplateName = null
-      environmentTemplateProjectName = null
       errorHandling = 'stopOnError'
-      gateCondition = null
-      gateType = null
-      groupName = null
-      groupRunType = null
       insertRollingDeployManualStep = '0'
-      instruction = null
-      notificationEnabled = null
-      notificationTemplate = null
-      parallelToPrevious = null
-      plannedEndDate = null
-      plannedStartDate = null
-      precondition = null
-      requiredApprovalsCount = null
+      projectName = 'Default'
       resourceName = ''
-      retryCount = null
-      retryInterval = null
-      retryType = null
-      rollingDeployEnabled = null
-      rollingDeployManualStepCondition = null
       skippable = '0'
-      snapshotName = null
-      stageSummaryParameters = null
-      startingStage = null
-      subErrorHandling = null
-      subapplication = null
-      subpipeline = null
       subpluginKey = 'EC-Jenkins'
       subprocedure = 'GetBuildLog'
-      subprocess = null
-      subproject = null
-      subrelease = null
-      subreleasePipeline = null
-      subreleasePipelineProject = null
-      subreleaseSuffix = null
-      subservice = null
-      subworkflowDefinition = null
-      subworkflowStartingState = null
-      taskProcessType = null
       taskType = 'PLUGIN'
-      triggerType = null
       useApproverAcl = '0'
       waitForPlannedStartDate = '0'
     }
 
     task 'Extract Test Results', {
       description = ''
-      actionLabelText = null
       actualParameter = [
-        'commandToRun': '''use ElectricCommander;
-use XML::XPath;
+        'commandToRun': '''import com.electriccloud.client.groovy.ElectricFlow
+import java.util.regex.Pattern
 
-my $cmdr = new ElectricCommander();
+ElectricFlow ef = new ElectricFlow()
 
-my $buildLog = $cmdr->getPropertyValue("/myPipelineRuntime/buildOutput");
+def buidLog = ef.getProperty propertyName: \"/myPipelineRuntime/buildOutput\"
 
-my ($run, $failures, $errors, $skipped) = $buildLog =~ /Results:.*Tests\\srun:\\s(\\d+),\\sFailures:\\s(\\d+),\\sErrors:\\s(\\d+),\\sSkipped:\\s(\\d)/xms;
+// pattern explanation
+// ?m means to allow matching across multipe lines
+// ie to include beginning (^) and end ($) of the lines
+// ?s allows new lines to be matched by . (dot)
+// \\d+ any number of numbers
+def pattern = /(?ms)Results:.*Tests run: (\\d+), Failures: (\\d+), Errors: (\\d+), Skipped: (\\d+)/
+def partial = buidLog =~ pattern
 
-print "Run value is [".$run."]\\n";
-print "Failures value is [".$failures."]\\n";
-print "Errors value is [".$errors."]\\n";
-print "Skipped value is [".$skipped."]\\n";
+println \"Run value is  [\" + partial[0][1] + \"]\"
+println \"Failures value is: [\" + partial[0][2] + \"]\"
+println \"Errors value is [\" + partial[0][3] + \"]\"
+println \"Skipped value is [\" + partial[0][4] + \"]\"
 
-$cmdr->setProperty("/myPipelineRuntime/testsRun", $run);
-$cmdr->setProperty("/myPipelineRuntime/testsFailures", $failures);
-$cmdr->setProperty("/myPipelineRuntime/testsErrors", $errors);
-$cmdr->setProperty("/myPipelineRuntime/testsSkipped", $skipped);''',
-        'shellToUse': 'ec-perl',
+ef.setProperty propertyName: \"/myPipelineRuntime/testsRun\", value: partial[0][1]
+ef.setProperty propertyName: \"/myPipelineRuntime/testsFailures\", value: partial[0][2]
+ef.setProperty propertyName: \"/myPipelineRuntime/testsErrors\", value: partial[0][3]
+ef.setProperty propertyName: \"/myPipelineRuntime/testsSkipped\", value: partial[0][4]
+''',
+        'shellToUse': 'ec-groovy',
       ]
       advancedMode = '0'
-      afterLastRetry = null
       allowOutOfOrderRun = '0'
-      allowSkip = null
       alwaysRun = '0'
-      condition = null
-      customLabel = null
-      deployerExpression = null
-      deployerRunType = null
-      disableFailure = null
-      duration = null
-      emailConfigName = null
       enabled = '1'
-      environmentName = null
-      environmentProjectName = null
-      environmentTemplateName = null
-      environmentTemplateProjectName = null
       errorHandling = 'stopOnError'
-      gateCondition = null
-      gateType = null
-      groupName = null
-      groupRunType = null
       insertRollingDeployManualStep = '0'
-      instruction = null
-      notificationEnabled = null
-      notificationTemplate = null
-      parallelToPrevious = null
-      plannedEndDate = null
-      plannedStartDate = null
-      precondition = null
-      requiredApprovalsCount = null
+      projectName = 'Default'
       resourceName = ''
-      retryCount = null
-      retryInterval = null
-      retryType = null
-      rollingDeployEnabled = null
-      rollingDeployManualStepCondition = null
       skippable = '0'
-      snapshotName = null
-      stageSummaryParameters = null
-      startingStage = null
-      subErrorHandling = null
-      subapplication = null
-      subpipeline = null
       subpluginKey = 'EC-Core'
       subprocedure = 'RunCommand'
-      subprocess = null
-      subproject = null
-      subrelease = null
-      subreleasePipeline = null
-      subreleasePipelineProject = null
-      subreleaseSuffix = null
-      subservice = null
-      subworkflowDefinition = null
-      subworkflowStartingState = null
-      taskProcessType = null
       taskType = 'COMMAND'
-      triggerType = null
+      useApproverAcl = '0'
+      waitForPlannedStartDate = '0'
+    }
+
+    task 'Delete Jenkins job', {
+      description = ''
+      actualParameter = [
+        'config': 'CloudBees Core Red Team server',
+        'jobName': '$[/myPipelineRuntime/name]',
+        'jobPath': '/',
+      ]
+      advancedMode = '0'
+      allowOutOfOrderRun = '0'
+      alwaysRun = '0'
+      enabled = '1'
+      errorHandling = 'stopOnError'
+      insertRollingDeployManualStep = '0'
+      projectName = 'Default'
+      resourceName = ''
+      skippable = '0'
+      subpluginKey = 'EC-Jenkins-Job-CRUD'
+      subprocedure = 'Delete Job'
+      taskType = 'PLUGIN'
       useApproverAcl = '0'
       waitForPlannedStartDate = '0'
     }
@@ -271,6 +222,6 @@ $cmdr->setProperty("/myPipelineRuntime/testsSkipped", $skipped);''',
   property 'ec_counters', {
 
     // Custom properties
-    pipelineCounter = '10'
+    pipelineCounter = '28'
   }
 }
