@@ -3,3 +3,8 @@ $[/javascript myStageRuntime.tasks["Run Proc (Fail)"].job.s3bucketexists == "FAL
 
 ## Run step 5 times only ##
 $[/javascript $[/increment /myPipelineRuntime/count] < 3;]
+
+## Condition rule using status of previous step ##
+$[/javascript
+	myStageRuntime.tasks["Validate deployment"].outcome != "success"
+]
