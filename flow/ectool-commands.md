@@ -26,3 +26,6 @@ printf 'apassword\n' | ectool runProcedure /plugins/ECSCM-git/project --procedur
 
 ## Export DSL ##
 ectool generateDsl "/projects/Default" --suppressNulls true --suppressDefaults true  > c:\temp\flow-dsl-exports/2020-07-15-Default-Project.dsl'
+
+## Run Service Catalog Item ##
+ectool runCatalogItem "Electric Cloud" "DSL" "Import DSL" --actualParameter directory="/opt/electriccloud/imports" rsrcName="local"
