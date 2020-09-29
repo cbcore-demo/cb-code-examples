@@ -11,8 +11,14 @@ pipeline {
     stages {
         stage('Prep') { 
             steps {
-                echo "Version parameter is set to [$Version]\n"
-                echo "PortfolioId is set to [$PortfolioId]\n"
+                script {
+                    echo """===========================
+Parameters supplied to job are:
+Commit Hash is set to $CommitHash
+Version parameter is set to $Version
+PortfolioId is set to $PortfolioId
+==========================="""
+                }
             }
         }
         stage('Create Product') { 
@@ -42,6 +48,11 @@ pipeline {
                         ).trim()
                     }
                 }
+            }
+        }
+        stage('Create PR') {
+            steps {
+                echo "PR id=3"
             }
         }
     }
