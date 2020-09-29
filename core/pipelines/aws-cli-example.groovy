@@ -2,6 +2,11 @@
 def res
 
 pipeline {
+    parameters {
+        string(name: 'Version', defaultValue: '1', description: 'Product Artifact Name', trim:true)
+        string(name: 'PortfolioId', defaultValue: '', description: 'Id of the portfolio the product should be associated with', trim:true)
+        string(name: 'CommitHash', defaultValue: '', description: 'Hash of the commit to be built', trim:true)
+    }
     agent { label 'aws-cli' }
     stages {
         stage('Prep') { 
