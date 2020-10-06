@@ -9,7 +9,7 @@ project "Custom008",{
 		formalParameter "TargetState", required: true, description: "PR desired end state (e.g. MERGED)"
 		formalParameter "Configuration", required: true, description: "Bitbucket configuration"
 		formalParameter "PollingInterval", required: false, defaultValue: "60", description: "Polling Interval in seconds"
-        formalParameter "NumberOfChecks", required: true, description: "The number of times to check for the desired state before giving up"
+		formalParameter "NumberOfChecks", required: true, description: "The number of times to check for the desired state before giving up"
 		formalParameter "prId", required: true, description: "PR to be queried"
 
 		step 'Get State', shell: 'ec-groovy', command: '''\
