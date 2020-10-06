@@ -18,8 +18,8 @@ project "Custom008",{
 			ElectricFlow ef = new ElectricFlow()
 
 			def PollingInterval = $[PollingInterval]
-            def Iteration = 1
-            def ApprovalStatus = ""
+			def Iteration = 1
+			def ApprovalStatus = ""
 
 			GetApprovalStatus = {
 				def params = [
@@ -38,27 +38,27 @@ project "Custom008",{
 					sleep 5000 // 5 seconds
 				}
 
-                ApprovalStatus = ef.getProperty(propertyName: "/myJob/prState", jobId: JobId).property.value
+				ApprovalStatus = ef.getProperty(propertyName: "/myJob/prState", jobId: JobId).property.value
 				//ef.setProperty propertyName: "/myJob/report-urls/Pull Request: $[prId]", value: "$ApprovalStatus"
 				println "PR status: $ApprovalStatus"
 				return ApprovalStatus
 			}
 
-            println "Checking PR $[prId] for status $[TargetState].  Polling interval is set to $[PollingInterval] seconds and there will be a total of $[NumberOfChecks] checks before failing."
-            println "Check #1"
+			println "Checking PR $[prId] for status $[TargetState].  Polling interval is set to $[PollingInterval] seconds and there will be a total of $[NumberOfChecks] checks before failing."
+			println "Check #1"
 
 			while (GetApprovalStatus() != '$[TargetState]' && Iteration < $[NumberOfChecks]) {
 				sleep PollingInterval * 1000
-                Iteration = Iteration + 1
-                println "Check #" + Iteration
+				Iteration = Iteration + 1
+				println "Check #" + Iteration
 			}
 
-            if (ApprovalStatus != '$[TargetState]') {
-                println "Desired Target State of $[TargetState] was not met.  Current State is $ApprovalStatus"
-                System.exit(-1)
-            }
+			if (ApprovalStatus != '$[TargetState]') {
+				println "Desired Target State of $[TargetState] was not met.  Current State is $ApprovalStatus"
+				System.exit(-1)
+			}
 
-            println "Desired Target State of $[TargetState] was met."
+			println "Desired Target State of $[TargetState] was met."
 
 		'''.stripIndent()
 	}
