@@ -53,7 +53,7 @@ Notes:
 - For HTML encoding see: http://rabbit.eng.miami.edu/info/htmlchars.html
 - Include target="_blank" on href's as some URL's don't seem to open inside a frame within a Flow page
 
-More examples (from http://docs.electric-cloud.com/eflow_doc/9_1/User/HTML/FlowUserGuide_9_1.htm#eflow_user/custom_editors.htm):
+More examples (from https://docs.cloudbees.com/docs/cloudbees-cd/latest/automation-platform/custom-editors):
 
 <editor>
     <formElement>
