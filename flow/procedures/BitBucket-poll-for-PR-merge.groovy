@@ -109,7 +109,7 @@ while (GetApprovalStatus() != \'$[TargetState]\' && Iteration < $[NumberOfChecks
     <label>Number of Checks</label>
     <documentation>The number of times to check the PR state before aborting.  Default is 10.</documentation>
     <type>entry</type>
-    <default>10</default>
+    <value>10</value>
     <required>0</required>
   </formElement>
 
@@ -118,7 +118,7 @@ while (GetApprovalStatus() != \'$[TargetState]\' && Iteration < $[NumberOfChecks
     <label>Polling Interval</label>
     <documentation>The gap between checks in seconds.  Default is 60 seconds.</documentation>
     <type>entry</type>
-    <default>60</default>
+    <value>60</value>
     <required>0</required>
   </formElement>
 
