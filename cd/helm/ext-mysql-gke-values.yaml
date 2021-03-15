@@ -1,0 +1,29 @@
+database:
+  dbType: mysql
+  dbName: cbcd
+  ## 3. Name of the secret containing the database user credentials.
+  ## The data field must contain base64 encoded values for keys 'DB_USER' and 'DB_PASSWORD'.
+  ## E.g., kubectl create secret generic flow-db-secret --from-literal=DB_USER=flow_user --from-literal=DB_PASSWORD='S!*d$z5Dsb'
+  ##
+  ## Set the name of the secret that contains the database user credentials.
+  dbUser: root
+  dbPassword: root123
+  externalEndpoint: 35.246.15.233
+  dbPort: 3306
+##---------------------------------------------
+## Flow storage configuration section
+##---------------------------------------------
+storage:
+  volumes:
+    serverPlugins:
+      storageClass: nfs-client
+##---------------------------------------------
+## Flow server admin credentials section
+##---------------------------------------------
+flowCredentials:
+  ## Name of the secret containing the admin user password to use.
+  ## The data field must contain base64 encoded value for key 'CBF_SERVER_ADMIN_PASSWORD'.
+  ## E.g., kubectl create secret generic your-flow-admin-secret --from-literal=CBF_SERVER_ADMIN_PASSWORD='rrx!*d$z75Dsb'
+  ##
+  ## Set the name of the secret that contains the admin user password.
+  adminPassword: admin12345
