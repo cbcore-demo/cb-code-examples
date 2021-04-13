@@ -76,13 +76,19 @@ $[/javascript projects["Custom016"].flowRuntimes["Microservices Release Train_pi
 $[SourceFileName]
 ```
 
-### Get PipelineRuntime name ###
+## Get PipelineRuntime name ##
+
 ```
 $[/myPipelineRuntime/name]
 ```
 
+## Get EC-Nexus retrievedArtifactVersion version, requires referencing the resource this step is running on ##
+$[/javascript myJob.retrievedArtifactVersions["$[/myResource/name]"].version]
+
 ## Extract single value from JSON ##
+
 ### JSON sample ###
+
 ```json
 "{
 	"project":{
