@@ -2,7 +2,7 @@
 
 $[] - is property expansion notation in Flow. It is a preprocessor action, done before running a script, etc. The default content is an XPATH expression such as:
 ```xml
-/path/anotherPath/[A path with spaces]/propertynameOrIntrinsicName
+$[/path/anotherPath/[A path with spaces]/propertynameOrIntrinsicName]
 ```
 There are other content types:
 ```
@@ -37,9 +37,21 @@ Instead of relative addresses, can use absolute eg:
 If run in the context of the pipeline, then the 2 following are equivalent:
 
 ```
-/myPipeline/matcherTest
+$[/myPipeline/matcherTest]
 
-/projects/Custom012/pipelines/protected-command-credentials/matcherTest
+$[/projects/Custom012/pipelines/protected-command-credentials/matcherTest]
+```
+
+## Get name of snapshot being deployed ##
+
+```
+$[/myJob/ec_snapshot-name]
+```
+
+## Get artifact version from component ##
+
+```
+$[/myComponent/ec_content_details/version]
 ```
 
 ## Reference result of JIRA Get Issues (multiple property sheets) ##
