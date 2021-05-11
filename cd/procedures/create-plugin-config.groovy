@@ -57,11 +57,8 @@ import com.electriccloud.client.groovy.models.Credential
 
 ElectricFlow ef = new ElectricFlow()
 
-def Project = ef.getPlugin(pluginName: \'EC-Nexus\').plugin.projectName
-def ConfigLocation = ef.getProperty(propertyName: \'/plugins/\' + Project + \'/project/ec_config/configLocation\').property.value
-//def Configs = ef.getProperties(propertyName: ConfigLocation, projectName: Project).property
-
-//def proj = "/plugins/$[pluginname]/project" // project name for ths plugin
+def Project = ef.getPlugin(pluginName: "$[pluginname]").plugin.projectName
+def ConfigLocation = ef.getProperty(propertyName: "/projects/${Project}/ec_config/configLocation").property.value
 def configname = "$[configname]" // name of the config to create
 def instance = "$[endpoint]" // endpoint or instance to use in the plugin config
 
@@ -98,7 +95,7 @@ try {
 	def JobId = result.jobId // capture the job id of the above runProcedure
 
     // create a link in the job report to take the user to the called procedure
-	ef.setProperty propertyName: "/myJob/report-urls/$[pluginname] CreateConfiguration Job", value: "$[/server/webServerHost]/commander/link/jobDetails/jobs/$JobId"
+	ef.setProperty propertyName: "/myJob/report-urls/$[pluginname] CreateConfiguration Job", value: "/commander/link/jobDetails/jobs/$JobId"
 
 	println "Started plugin CreateConfiguration job with id " + JobId // show jobId in the log
 
