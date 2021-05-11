@@ -57,7 +57,11 @@ import com.electriccloud.client.groovy.models.Credential
 
 ElectricFlow ef = new ElectricFlow()
 
-def proj = "/plugins/$[pluginname]/project" // project name for ths plugin
+def Project = ef.getPlugin(pluginName: \'EC-Nexus\').plugin.projectName
+def ConfigLocation = ef.getProperty(propertyName: \'/plugins/\' + Project + \'/project/ec_config/configLocation\').property.value
+//def Configs = ef.getProperties(propertyName: ConfigLocation, projectName: Project).property
+
+//def proj = "/plugins/$[pluginname]/project" // project name for ths plugin
 def configname = "$[configname]" // name of the config to create
 def instance = "$[endpoint]" // endpoint or instance to use in the plugin config
 
@@ -68,7 +72,7 @@ println "Configname: " + configname
 // Check to see if plugin config already exists
 // Note: ec_plugin_cfgs path may be different for different plugins
 try {
-	ef.getProperty(propertyName: proj +"/ec_plugin_cfgs/" + configname)
+	ef.getProperty(propertyName: ConfigLocation + "/" + configname, projectName: Project)
 } catch (e) {
 	// this catch block is only run if the plugin config does not exist
     println "\\nCreating Plugin Config"
@@ -85,7 +89,7 @@ try {
 
     // run the CreateConfiguration procedure in the plugin to create the plugin config
 	result = ef.runProcedure(
-   		projectName : proj,
+   		projectName : Project,
 	    procedureName : "CreateConfiguration",
    		actualParameters : params,
 	    credentials : creds
@@ -118,7 +122,7 @@ try {
 		]
 
 		ef.runProcedure(
-   			projectName : proj,
+   			projectName : Project,
 		    procedureName : "DeleteConfiguration",
 	   		actualParameters : delparams
 		)
@@ -128,7 +132,8 @@ try {
     }
 }
 
-println "\\nPlugin Config already exists, aborting" // If we got here, it means the plugin config already exists'''
+println "\\nPlugin Config already exists, aborting" // If we got here, it means the plugin config already exists
+'''
     condition = ''
     errorHandling = 'failProcedure'
     exclusiveMode = 'none'
