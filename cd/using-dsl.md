@@ -7,21 +7,48 @@ Return values from DSL procedures behave different from groovy.  In groovy you w
 
 and you would see the response string.
 
-But with DSL (using the DSLIDE), you don't see any value.  Firstly, because it is placed inside another element.  The element name is typically based on the procedure so in the case of getGroups, the result would be in a 'groups' element.
+But with DSL (using the DSLIDE), you don't see any value.  Do the following instead:
 
-    def result = getGroups().groups
+    def result = getGroups()
+    result
+
+The result is an ArrayList containing groups.  If you do the following:
+
+    def result = getGroups()
+    println "$result"
+
+Then you will see the reference to the arraylist instead.
+
+To access elements in that arraylist you can do:
+
+    def result = getGroups().groups[0]
+    result
+
+This will show the first element, and then you can access properties inside that element, e.g.:
+
+    def result = getGroups().groups[0].owner
+    result
+
+And now we are dealing with strings you can do:
+
+    def result = getGroups().groups[0].owner
     println result
 
-But that still doesn't show anything.  Instead you can write it like this:
+To get a list of all the group names:
+
+    def result = getGroups().groups.groupName // note: name also works here instead of groupName
+    result
+
+Or another way is to write it like this to capture all the results:
 
     groups = []
-    getGroups().each {groups.push(it)}
+    getGroups().each { groups.push(it) }
     groups
 
-To capture all the output, or to just capture the name of each result (not the it.name refers to the collection and not any of the values in the result):
+Or to just capture the name of each result (not the it.name refers to the collection and not any of the values in the result):
 
     groups = []
-    getGroups().each {groups.push(it.name)}
+    getGroups().each { groups.push(it.name) } // OR getGroups().each { groups.push(it.groupName) }
     groups
 
 The following also works:
@@ -35,18 +62,47 @@ The following also works:
 If you want to look for a specific match in the result (e.g. for a parameter validation) then the following works:
 
     groups = []
-    getGroups().each {groups.push(it.name)}
+    getGroups().each { groups.push(it.name) }
     groups
-    if (groups.any { it == "greadonly" }) {
-    println "Yes"
+        if (groups.any { it == "greadonly" }) {
+        println "Yes"
     } else {
-    println "No"
+        println "No"
     }
 
 As does this:
 
     if ( getGroups().groups.name.any { it == "greadonly"  } ) {
-    println "Yes"
+        println "Yes"
     } else {
-    println "No"
+        println "No"
+    }
+
+OR to make the server filter instead:
+
+    if ( getGroups(filter: "greadonly").groups.groupName ) {
+        println "Yes"
+    } else {
+        println "No"
+    }
+
+And if you want to find the value of a property from a specific element (and you know the name of the element):
+
+    groups = []
+    owner = getGroups().groups.find{it = "Testing"}.owner
+    owner
+
+Or to get the owner property when you know the groupName value:
+
+    groups = []
+    owner = getGroups().groups.find{it.groupName == "Testing"}.owner
+    owner
+
+OR
+
+    def result = getGroups().groups
+    result.each { Result ->
+    if (Result.groupName == "Testing" ) {
+        println Result.owner
+    }
     }
