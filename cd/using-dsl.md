@@ -1,5 +1,7 @@
 # Using DSL #
 
+## Viewing results of api calls #
+
 Return values from DSL procedures behave different from groovy.  In groovy you would be able to do something like:
 
     def result = ef.getGroups()
@@ -18,6 +20,8 @@ The result is an ArrayList containing groups.  If you do the following:
     println "$result"
 
 Then you will see the reference to the arraylist instead.
+
+## Accessing elements ##
 
 To access elements in that arraylist you can do:
 
@@ -58,6 +62,8 @@ The following also works:
     result.each { Result ->
     	println Result.groupName
     }
+
+## Finding matches ##
 
 If you want to look for a specific match in the result (e.g. for a parameter validation) then the following works:
 
@@ -106,3 +112,15 @@ OR
         println Result.owner
     }
     }
+
+## Specifing parameter names ##
+
+When using the DSL IDE it seems to be fairly forgiving on whether you explicitly name the input parameters or not, but other use of DSL (e.g. Service Catalogs Import from DSL) seem to be less forgiving.  It's safer to include the parameter name always.  E.g.:
+
+Instead of
+
+    def Host = getProperty("/server/hostName").value
+
+It is better to use
+
+    def Host = getProperty(propertyName: "/server/hostName").value
