@@ -124,3 +124,17 @@ Instead of
 It is better to use
 
     def Host = getProperty(propertyName: "/server/hostName").value
+
+## Identifying properties ##
+
+To find the properties available for different objects, use getProperties.  For example:
+
+    def props = getProperties(propertyName: "/server/settings")
+    props
+
+Will show all the available server settings and their property names.   You can also start with just /server to start at the very top level and work your way down.
+
+To simplify the results and just see the list of property names:
+
+    def props = getProperties(propertyName: "/server/settings").property.propertyName
+    props
