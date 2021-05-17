@@ -5,8 +5,7 @@
 // Store result into an outputParameter
 // Store an id value from the result (which is JSON) into an outputParameter
 // Store a clickable link to the external tool to access the launched job, this uses the endpoint value from the plugin config
-    Config configValues = context.getConfigValues()
-    def ep = configValues.getParameter('endpoint').value
+    def ep = p.getParameter('endpoint').value
     if (!ep.endsWith('/')) { ep = ep + "/" }
 
     // set OutputParameters
@@ -15,3 +14,6 @@
     sr.setOutputParameter('link', '<html><a href="' + ep + '#/jobs/playbook/' + response.id.toString() + '" target="_blank">Ansible Launched Job ' + response.id.toString() +'</a></html>')
     sr.apply()
 
+// Note: p is an object containing the config details, this is one of the automatically incoming values
+// You can view the content of it using:
+// log.info "StepParameters = $p"
