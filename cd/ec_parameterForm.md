@@ -1,3 +1,4 @@
+```xml
 <editor>
   <help>/commander/pages/EC-Jenkins-1.14.1.270/EC-Jenkins_help?s=Administration&amp;ss=Plugins#ShowBuildProcess</help>
   <formElement>
@@ -131,3 +132,4 @@ More examples (from https://docs.cloudbees.com/docs/cloudbees-cd/latest/automati
         <type>credential</type>
     </formElement>
 </editor>
+```
