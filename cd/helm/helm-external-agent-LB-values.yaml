@@ -1,6 +1,8 @@
 #---------------------------------------------
 # Flow agent configurations section
 #---------------------------------------------
+images:
+  tag: "10.2.0.148735_2.1.22_20210527"
 
 ## Resource name to use when registering the agent as a resource on the Flow server.
 #
