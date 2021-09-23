@@ -49,7 +49,7 @@ Or another way is to write it like this to capture all the results:
     getGroups().each { groups.push(it) }
     groups
 
-Or to just capture the name of each result (not the it.name refers to the collection and not any of the values in the result):
+Or to just capture the name of each result (note the it.name refers to the collection and not any of the values in the result):
 
     groups = []
     getGroups().each { groups.push(it.name) } // OR getGroups().each { groups.push(it.groupName) }
