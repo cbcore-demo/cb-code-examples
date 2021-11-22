@@ -6,6 +6,21 @@ Name of pipeline runtime
 
     /myPipelineRuntime/name
 
+Get task status from task in same stage
+
+	$[/javascript  myPipelineRuntime.stages["DEV"].tasks["A Task"].outcome]
+	$[/javascript  myStageRuntime.tasks["A Task"].outcome]
+
+Get group status within same stage
+
+	$[/javascript  myPipelineRuntime.stages["DEV"].tasks["Group1"].outcome]
+	$[/javascript  myStageRuntime.tasks["Group1"].outcome]
+
+Get task status within a group within same stage
+
+	$[/javascript  myPipelineRuntime.stages["DEV"].tasks["Group1"].tasks["A Task"].outcome]
+	$[/javascript  myStageRuntime.tasks["Group1"].tasks["A Task"].outcome]
+
 Get task status from a different pipelineRuntime
 
     $[/javascript projects["Custom016"].flowRuntimes["Microservices Release Train_pipeline_Microservices Release Train_2_20201214115204"].stages["Integration Test"].tasks["Deploy"].outcome]
