@@ -13,9 +13,13 @@ import groovy.json.JsonSlurper
 def updateCenterURL = "https://jenkins-updates.cloudbees.com/update-center/$[envelope]/update-center.json?version=$[version]"
 def groupResults = "$[groupResults]"
 def matchedVerified = []
+def matchedVerifiedOutputString = ""
 def matchedCompatible = []
+def matchedCompatibleOutputString = ""
 def notMatched = []
-def jsonSlurper = new JsonSlurper()
+def notMatchedOutputString = ""
+def nonGrouped = []
+def nonGroupedOutputString = ""
 
 // Download updatecenter.json
 def get = new URL(updateCenterURL).openConnection(); 
@@ -33,7 +37,8 @@ def lines = postResponseData.readLines()
 def extractedResponseData = lines[1]
 
 // Convert to Json
-def responseAsJson = jsonSlurper.parseText(extractedResponseData)
+def slurper = new JsonSlurper()
+def responseAsJson = slurper.parseText(extractedResponseData)
 
 // Get list of plugins to check and iterate through them
 def pluginsToCheck = '''$[pluginsToCheck]'''
@@ -44,49 +49,51 @@ pluginsToCheck.readLines().each { plugin ->
     def pluginId = plugin.split(":")
 
     // try to match the plugin in the Json
-	def matched = responseAsJson.offeredEnvelope.plugins[pluginId[0]]
-    
+	def matched = responseAsJson.envelope.plugins[pluginId[0]]
+
     // if plugin not matched
     if (matched == null)
     {
-        // record it
-	    notMatched << pluginId[0]
-		// if results should not be grouped then display this plugin
-        if (groupResults == 'false') {
-        	println pluginId[0]
+        // if results should be grouped then record this plugin in it's correct group
+        if (groupResults == 'true') {
+            // record it in correct group
+            notMatched << pluginId[0]
+        } else {
+            // or record it in original order
+            nonGrouped << pluginId[0]
         }
     } else {
         // if plugin is matched
-        // if plugin is verified
-		if (matched.tier == 'verified') {
+        // if plugin is verified or proprietary
+        if (matched.tier in ['verified', 'proprietary']) {
             // if version was supplied then check to see if version matches
-			if (pluginId.size() > 1 && matched.version != pluginId[1]) {
-                // record without version warning
+            if (pluginId.size() > 1 && matched.version != pluginId[1]) {
+                // record with version warning
                 matchedVerified << matched.artifactId + " (CAP version " + matched.version + " supplied plugin version " + pluginId[1] + ")"
             } else {
-                // record with version warning
-            	matchedVerified << matched.artifactId
+                // record without version warning
+                matchedVerified << matched.artifactId
             }
         // if plugin is compatible
-	    } else if (matched.tier == 'compatible') {
+        } else if (matched.tier == 'compatible') {
             // if version was supplied then check to see if version matches
-   			if (pluginId.size() > 1 && matched.version != pluginId[1]) {
-                // record without version warning
-		      	matchedCompatible << matched.artifactId + " (CAP version " + matched.version + " supplied plugin version  " + pluginId[1] + ")"
-            } else {
+            if (pluginId.size() > 1 && matched.version != pluginId[1]) {
                 // record with version warning
-		      	matchedCompatible << matched.artifactId
-            }
-	    }
-        // if results should not be grouped then display this plugin
-		if (groupResults == 'false') {
-            // if version was supplied then check to see if version matches
-			if (pluginId.size() > 1 && matched.version != pluginId[1]) {
-                // display without version warning
-				println matched.artifactId + ' | ' + matched.tier + " (CAP version " + matched.version + " supplied plugin version " + pluginId[1] + ")"
+                matchedCompatible << matched.artifactId + " (CAP version " + matched.version + " supplied plugin version  " + pluginId[1] + ")"
             } else {
-                // display with version warning
-            	println matched.artifactId + ' | ' + matched.tier
+                // record without version warning
+                matchedCompatible << matched.artifactId
+            }
+        }
+        // if results should not be grouped then display this plugin
+        if (groupResults == 'false') {
+            // if version was supplied then check to see if version matches
+            if (pluginId.size() > 1 && matched.version != pluginId[1]) {
+                // record with version warning
+                nonGrouped << matched.artifactId + ' | ' + matched.tier + " (CAP version " + matched.version + " supplied plugin version " + pluginId[1] + ")"
+            } else {
+                // record without version warning
+                nonGrouped << matched.artifactId + ' | ' + matched.tier
             }
         }
     }
@@ -94,19 +101,33 @@ pluginsToCheck.readLines().each { plugin ->
 
 // if results should be grouped then display them
 if (groupResults == 'true') {
-	println "Verified\n--------\n"
-	matchedVerified.each { println it }
-	
-	println "\nCompatible\n----------\n"
-	matchedCompatible.each { println it }
-	
-	println "\nTier 3\n------\n"
-	notMatched.each { println it }
+    println "Verified or Proprietary\n--------\n"
+    matchedVerified.each { item ->
+        matchedVerifiedOutputString = matchedVerifiedOutputString + item + "\n"
+    }
+    println matchedVerifiedOutputString
+
+    println "\nCompatible\n----------\n"
+    matchedCompatible.each { item ->
+        matchedCompatibleOutputString = matchedCompatibleOutputString + item + "\n"
+    }
+    println matchedCompatibleOutputString
+
+    println "\nTier 3\n------\n"
+    notMatched.each { item ->
+        notMatchedOutputString = notMatchedOutputString + item + "\n"
+    }
+    println notMatchedOutputString
+} else {
+    nonGrouped.each { item ->
+        nonGroupedOutputString = nonGroupedOutputString + item + "\n"
+    }
+    println nonGroupedOutputString
 }
 
 // Display some statistics
 println "\nStatistics\n"
 println "Total number of plugins = " + totalPluginsNumber
-println "Number of verified plugins = " + matchedVerified.size() + " (" + Math.rint((matchedVerified.size() / totalPluginsNumber)*100) + "%)"
+println "Number of verified or proprietary plugins = " + matchedVerified.size() + " (" + Math.rint((matchedVerified.size() / totalPluginsNumber)*100) + "%)"
 println "Number of compatible plugins = " + matchedCompatible.size() + " (" + Math.rint((matchedCompatible.size() / totalPluginsNumber)*100) + "%)"
 println "Number of Tier 3 plugins = " + notMatched.size() + " (" + Math.rint((notMatched.size() / totalPluginsNumber)*100) + "%)"
