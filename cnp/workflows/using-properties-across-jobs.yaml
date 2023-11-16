@@ -28,6 +28,6 @@ jobs:
     steps:
       - uses: docker://golang:1.20
         name: Pretend to deploy
-        run: echo 'Pretending to deploy version ${{ needs.build.ouptuts.version }}'
+        run: echo 'Pretending to deploy version ${{ needs.build.outputs.version }}'
     needs:
       - build
