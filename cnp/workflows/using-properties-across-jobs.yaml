@@ -1,0 +1,33 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: Training workflow
+on:
+  push:
+    branches:
+      - features/**
+      - main
+jobs:
+  build:
+    steps:
+      - uses: docker://golang:1.20.3-alpine3.17
+        name: Say hello
+        shell: sh
+        run: |
+          echo "Hello World!"
+      - uses: cloudbees-io/checkout@v1
+        name: Checkout
+      - users: docker://golang:1.20.3-alpine3.17
+        name: Compute version
+        id: compute-version
+        shell:sh
+        run: |
+          cat version > $CLOUDBEES_OUTPUTS/version
+      outputs:
+        version: ${{ steps.compute-version.outputs.version }}
+  job1:
+    steps:
+      - uses: docker://golang:1.20
+        name: Pretend to deploy
+        run: echo 'Pretending to deploy version ${{ needs.build.ouptuts.version }}'
+    needs:
+      - build
